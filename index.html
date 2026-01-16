@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>VYNIX • Live + Feed United</title>
-  <meta name="description" content="VYNIX – Stream live like YouTube/Twitch, post & vibe like X. Real energy, no switching tabs."/>
+  <title>VYNIX • Live + Feed United (Chat Demo)</title>
+  <meta name="description" content="VYNIX – Stream live like YouTube/Twitch, post & vibe like X. Real chat demo powered by Firebase!"/>
 
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎮⚡️</text></svg>">
 
@@ -18,6 +18,8 @@
       --accent-glow: #00ffff;
       --text: #f0f0ff;
       --text-light: #b0a0ff;
+      --chat-bg: rgba(255,255,255,0.05);
+      --chat-input: rgba(0,0,0,0.5);
     }
 
     body {
@@ -61,11 +63,7 @@
       margin-bottom: 1rem;
     }
 
-    .tagline {
-      font-size: 1.8rem;
-      margin-bottom: 2rem;
-      color: var(--accent-glow);
-    }
+    .tagline { font-size: 1.8rem; margin-bottom: 2rem; color: var(--accent-glow); }
 
     .features {
       display: grid;
@@ -92,25 +90,86 @@
       font-size: 1.3rem;
       box-shadow: 0 20px 40px rgba(195,0,255,0.6);
       transition: all 0.4s;
-      display: inline-block;
-      margin-top: 1rem;
     }
 
-    .btn:hover {
-      transform: scale(1.1);
-      box-shadow: 0 30px 60px rgba(195,0,255,0.8);
+    .btn:hover { transform: scale(1.1); box-shadow: 0 30px 60px rgba(195,0,255,0.8); }
+
+    .coming { margin-top: 3rem; color: var(--accent-glow); font-size: 1.1rem; }
+
+    .chat-section {
+      background: var(--card);
+      backdrop-filter: blur(24px);
+      border: 1px solid rgba(195,0,255,0.15);
+      border-radius: 32px;
+      padding: 2rem;
+      width: 100%;
+      max-width: 600px;
+      box-shadow: 0 30px 60px rgba(195,0,255,0.3);
     }
 
-    .coming {
-      margin-top: 3rem;
+    .chat-header {
+      font-size: 2rem;
       color: var(--accent-glow);
-      font-size: 1.1rem;
+      margin-bottom: 1.5rem;
+      text-align: center;
     }
 
-    @media (max-width: 600px) {
-      h1 { font-size: 3.2rem; }
-      .tagline { font-size: 1.2rem; }
+    .chat-window {
+      background: var(--chat-bg);
+      border-radius: 16px;
+      padding: 1.5rem;
+      height: 400px;
+      overflow-y: auto;
+      margin-bottom: 1.5rem;
+      border: 1px solid rgba(0,255,255,0.15);
     }
+
+    .message {
+      padding: 0.9rem 1.4rem;
+      border-radius: 20px;
+      margin-bottom: 1rem;
+      max-width: 80%;
+      word-wrap: break-word;
+      font-size: 1rem;
+    }
+
+    .message.user {
+      margin-left: auto;
+      background: rgba(195,0,255,0.4);
+    }
+
+    .message.other {
+      margin-right: auto;
+      background: rgba(0,255,255,0.3);
+    }
+
+    .chat-input {
+      display: flex;
+      gap: 1rem;
+    }
+
+    #message-input {
+      flex: 1;
+      padding: 1rem 1.5rem;
+      border-radius: 50px;
+      border: 1px solid rgba(195,0,255,0.4);
+      background: var(--chat-input);
+      color: var(--text);
+      font-size: 1rem;
+    }
+
+    #send-btn {
+      padding: 1rem 2.2rem;
+      background: linear-gradient(135deg, var(--accent), #a000ff);
+      color: white;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+
+    #send-btn:hover { transform: scale(1.05); }
   </style>
 </head>
 <body>
@@ -118,26 +177,114 @@
   <div class="glass">
     <h1>VYNIX</h1>
     <div class="tagline">Live Stream + Real-Time Feed. United.</div>
-
-    <p>
-      Go live like YouTube/Twitch. Post, reply, trend like X.
-      All in one app. Built for gamers, creators, and real vibes.
-    </p>
+    <p>Go live like YouTube/Twitch. Post & chat like X. Real multi-user chat demo powered by Firebase!</p>
 
     <div class="features">
-      <div class="feature">🔴 Live streaming with chat, emotes & reactions</div>
-      <div class="feature">🗨️ Real-time posts, threads & trending feed</div>
-      <div class="feature">🎮 Clip moments → instantly share to timeline</div>
-      <div class="feature">⚡ Feed reacts LIVE during streams</div>
-      <div class="feature">💰 Creator monetization built-in</div>
+      <div class="feature">🔴 Instant live streaming with chat, emotes, donations</div>
+      <div class="feature">🗨️ Real-time chat — messages sync across devices</div>
+      <div class="feature">🎮 Clip stream moments → auto-post to timeline</div>
+      <div class="feature">⚡ No heavy algo — pure vibes & energy</div>
+      <div class="feature">💰 Tips, subs, early monetization coming</div>
     </div>
 
-    <a href="#" class="btn">Enter VYNIX ⚡️</a>
+    <a href="#" class="btn">Join Waitlist – Be First ⚡️</a>
+    <div class="coming">Demo Chat Active • From @JovanTheGamerYt in Skopje • 2026</div>
+  </div>
 
-    <div class="coming">
-      Launching 3/3/2026 • From @Vynix
+  <!-- Functional Chat Section -->
+  <div class="chat-section">
+    <div class="chat-header">Vynix Global Chat Demo</div>
+    <div class="chat-window" id="chat-window">
+      <div class="message other">Connecting to Firebase...</div>
+    </div>
+    <div class="chat-input">
+      <input type="text" id="message-input" placeholder="Type your message...">
+      <button id="send-btn">Send ⚡️</button>
     </div>
   </div>
 
+  <!-- Firebase SDK -->
+  <script type="module">
+    const firebaseConfig = {
+      apiKey: "AIzaSyD0ubXdhJuuL-w3MskzzPpGt88pDh_Qdc8",
+      authDomain: "vynix-2b50d.firebaseapp.com",
+      projectId: "vynix-2b50d",
+      storageBucket: "vynix-2b50d.firebasestorage.app",
+      messagingSenderId: "111053295451",
+      appId: "1:111053295451:web:006a9accf5834cbb7f947e",
+      measurementId: "G-D5MMLQRP9P",
+      databaseURL: "https://vynix-2b50d-default-rtdb.europe-west1.firebasedatabase.app"
+    };
+
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+    import { getDatabase, ref, push, onChildAdded, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-database.js";
+    import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    const auth = getAuth(app);
+
+    const chatWindow = document.getElementById('chat-window');
+    const messageInput = document.getElementById('message-input');
+    const sendBtn = document.getElementById('send-btn');
+
+    let userId = null;
+
+    signInAnonymously(auth)
+      .then(() => console.log("Anonymous auth success"))
+      .catch((error) => {
+        console.error("Auth error:", error);
+        chatWindow.innerHTML += '<div class="message other">Auth failed – try refreshing the page</div>';
+      });
+
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        userId = user.uid;
+        console.log("User ID:", userId);
+        chatWindow.innerHTML = ''; // Clear loading message
+        loadMessages();
+      }
+    });
+
+    function loadMessages() {
+      const messagesRef = ref(db, 'messages');
+
+      onChildAdded(messagesRef, (snapshot) => {
+        const msg = snapshot.val();
+        if (!msg || !msg.text) return;
+
+        const msgDiv = document.createElement('div');
+        msgDiv.classList.add('message');
+        msgDiv.classList.add(msg.uid === userId ? 'user' : 'other');
+        msgDiv.textContent = msg.text;
+        chatWindow.appendChild(msgDiv);
+        chatWindow.scrollTop = chatWindow.scrollHeight;
+      }, (error) => {
+        console.error("Database load error:", error);
+        chatWindow.innerHTML += '<div class="message other">Error loading messages – check console (F12)</div>';
+      });
+    }
+
+    function sendMessage() {
+      const text = messageInput.value.trim();
+      if (!text || !userId) return;
+
+      const messagesRef = ref(db, 'messages');
+      push(messagesRef, {
+        text: text,
+        uid: userId,
+        timestamp: serverTimestamp()
+      }).catch((error) => {
+        console.error("Send error:", error);
+      });
+
+      messageInput.value = '';
+    }
+
+    sendBtn.addEventListener('click', sendMessage);
+    messageInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') sendMessage();
+    });
+  </script>
 </body>
 </html>
